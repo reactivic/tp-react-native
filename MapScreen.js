@@ -11,18 +11,11 @@ export default class MapScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      jobs: [],
       latitude: 37.78825,
       longitude: -122.4324,
     }
   }
   componentDidMount() {
-    fetch('https://mobile-api-jobs.herokuapp.com/api/jobs')
-    .then(data => data.json())
-    .then(jobs => {
-      this.setState({ jobs })
-    })
-    .catch(console.error)
     navigator.geolocation.getCurrentPosition(
       (position) => {
         this.setState({
@@ -44,7 +37,7 @@ export default class MapScreen extends React.Component {
           longitudeDelta: 100,
         }}
       >
-        {this.state.jobs.map(job => (
+        {this.props.screenProps.jobs.map(job => (
           <MapView.Marker
             key={job.id}
             coordinate={{

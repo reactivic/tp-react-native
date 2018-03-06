@@ -18,26 +18,12 @@ export default class ListScreen extends React.Component {
     tabBarLabel: "Liste",
     tabBarIcon: ({ tintColor }) => <Ionicons name="ios-list" size={25} color={tintColor} />,
   };
-  constructor(props) {
-    super(props);
-    this.state = {
-      jobs: [],
-    }
-  }
-  componentDidMount() {
-    fetch('https://mobile-api-jobs.herokuapp.com/api/jobs')
-    .then(data => data.json())
-    .then(jobs => {
-      this.setState({ jobs })
-    })
-    .catch(console.error)
-  }
   render() {
     return (
       <View style={styles.container}>
         <FlatList
           style={styles.container}
-          data={this.state.jobs}
+          data={this.props.screenProps.jobs}
           keyExtractor={_keyExtractor}
           renderItem={({item}) =>
             <ListItem
