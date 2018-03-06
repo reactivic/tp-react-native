@@ -12,6 +12,8 @@ export default class MapScreen extends React.Component {
     super(props);
     this.state = {
       jobs: [],
+      latitude: 37.78825,
+      longitude: -122.4324,
     }
   }
   componentDidMount() {
@@ -21,14 +23,23 @@ export default class MapScreen extends React.Component {
       this.setState({ jobs })
     })
     .catch(console.error)
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        this.setState({
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude,
+        });
+      },
+      (error) => console.error(error.message),
+    );
   }
   render() {
     return (
       <MapView
         style={{ flex: 1 }}
-        initialRegion={{
-          latitude: 37.78825,
-          longitude: -122.4324,
+        region={{
+          latitude: this.state.latitude,
+          longitude: this.state.longitude,
           latitudeDelta: 100,
           longitudeDelta: 100,
         }}
